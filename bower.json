@@ -1,0 +1,37 @@
+{
+  "name": "riseonproperty",
+  "description": "",
+  "authors": [
+    "Akshay Kulkarni <akshaykulkarni.2104@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3",
+    "react": "^15.1.0"
+  },
+  "overrides":{
+    "bootstrap":{
+      "main":[
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.min.css",
+        "less/bootstrap.less"
+      ]
+    },
+    "font-awesome":{
+      "main":[
+        "less/font-awesome.less",
+        "css/font-awesome.min.css",
+        "scss/font-awesome.scss"
+      ]
+    }
+  }
+}
