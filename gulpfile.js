@@ -41,68 +41,48 @@ gulp.task('vet-public', function () {
 });
 
 // Analyze all javascript files in the app/components for
-// style and correctness using jshint and jscs
+// style using jscs
 gulp.task('vet-app-components', function () {
   log('Analyzing React Components Using JSHint and JSCS');
 
   return gulp.src('./app/components/*.js')
             .pipe($.if(args.verbose, $.print()))
-            .pipe($.jshint())
-            .pipe($.jshint.reporter('jshint-stylish', {
-              verbose: true,
-            }))
-            .pipe($.jshint.reporter('fail'))
             .pipe($.jscs({ fix:true }))
             .pipe($.jscs.reporter())
             .pipe(gulp.dest('./app/components'));
 });
 
 // Analyze all javascript files in the app/actions for
-// style and correctness using jshint and jscs
+// style using jscs
 gulp.task('vet-app-actions', function () {
   log('Analyzing React Actions Using JSHint and JSCS');
 
   return gulp.src('./app/actions/*.js')
             .pipe($.if(args.verbose, $.print()))
-            .pipe($.jshint())
-            .pipe($.jshint.reporter('jshint-stylish', {
-              verbose: true,
-            }))
-            .pipe($.jshint.reporter('fail'))
             .pipe($.jscs({ fix:true }))
             .pipe($.jscs.reporter())
             .pipe(gulp.dest('./app/actions'));
 });
 
 // Analyze all javascript files in the app/stores for
-// style and correctness using jshint and jscs
+// style using jscs
 gulp.task('vet-app-stores', function () {
   log('Analyzing React Stores Using JSHint and JSCS');
 
   return gulp.src('./app/stores/*.js')
             .pipe($.if(args.verbose, $.print()))
-            .pipe($.jshint())
-            .pipe($.jshint.reporter('jshint-stylish', {
-              verbose: true,
-            }))
-            .pipe($.jshint.reporter('fail'))
             .pipe($.jscs({ fix:true }))
             .pipe($.jscs.reporter())
             .pipe(gulp.dest('./app/stores'));
 });
 
 // Analyze  main.jsx files in the app folder for
-// style and correctness using jshint and jscs
+// style  using jscs
 gulp.task('vet-app', function () {
   log('Analyzing main.jsx Using JSHint and JSCS');
 
-  return gulp.src('./app/main.jsx')
+  return gulp.src(['./app/main.jsx', './app/*.js'])
             .pipe($.if(args.verbose, $.print()))
-            .pipe($.jshint())
-            .pipe($.jshint.reporter('jshint-stylish', {
-              verbose: true,
-            }))
-            .pipe($.jshint.reporter('fail'))
             .pipe($.jscs({ fix:true }))
             .pipe($.jscs.reporter())
             .pipe(gulp.dest('./app'));
@@ -165,7 +145,7 @@ gulp.task('wiredep', function () {
 });
 
 // Automatically restart server on change to any JS Files and run vet on restart
-gulp.task('serve-dev', ['wiredep'], function () {
+gulp.task('serve-dev', ['vet', 'wiredep', 'bundle'], function () {
   var isDev = true;
 
   var nodeOptions = {
@@ -185,7 +165,7 @@ gulp.task('serve-dev', ['wiredep'], function () {
   };
 
   return $.nodemon(nodeOptions)
-          .on('restart', function (env) {
+          .on('restart', ['bundle'], function (env) {
             log('*** nodemon restarted ***');
             log('files changed: ' + env);
             setTimeout(function () {

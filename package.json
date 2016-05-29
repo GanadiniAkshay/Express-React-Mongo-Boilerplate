@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.4",
+    "guid": "0.0.12",
     "react": "^15.1.0",
     "react-addons": "^0.9.1-deprecated",
     "react-dom": "^15.1.0"
